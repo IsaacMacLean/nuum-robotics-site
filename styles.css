@@ -1,0 +1,291 @@
+:root {
+  --bg: #050505;
+  --fg: #f5f5f5;
+  --fg-dim: #a8a8a8;
+  --fg-mute: #6a6a6a;
+  --line: rgba(255, 255, 255, 0.1);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --font: "Baloo 2", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --pad-x: clamp(20px, 5vw, 64px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --mx: 50vw;
+  --my: 50vh;
+  --reveal: 150px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+
+body {
+  background: #000;
+  color: var(--fg);
+  font-family: var(--font);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  position: relative;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* Layer 1: black base */
+.bg-base {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 15% 0%, rgba(255, 255, 255, 0.03), transparent 60%),
+    linear-gradient(180deg, #050505 0%, #000 100%);
+}
+
+/* Layer 2: hidden engine, revealed by cursor mask */
+.engine-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(
+    var(--reveal) circle at var(--mx) var(--my),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 35%,
+    rgba(0, 0, 0, 0) 75%
+  );
+  mask-image: radial-gradient(
+    var(--reveal) circle at var(--mx) var(--my),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.8) 35%,
+    rgba(0, 0, 0, 0) 75%
+  );
+}
+.engine, .engine-cowl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(140vmin, 1100px);
+  height: min(140vmin, 1100px);
+  transform: translate(-50%, -50%);
+  opacity: 0.85;
+}
+.engine {
+  transform-origin: center center;
+}
+
+/* Layer 3: soft v1-style glow that follows cursor */
+.bg-cursor {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    200px circle at var(--mx) var(--my),
+    rgba(255, 255, 255, 0.13),
+    rgba(255, 255, 255, 0.04) 30%,
+    transparent 65%
+  );
+  transition: background 0.08s linear;
+}
+
+/* Layer 4: grain */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.nav, .hero, .foot { position: relative; z-index: 5; }
+
+/* Nav */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px var(--pad-x);
+}
+.brand {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  text-transform: lowercase;
+  color: var(--fg);
+}
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fg-dim);
+  padding: 9px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  transition: color 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.nav-cta:hover {
+  color: var(--fg);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+
+/* Hero */
+.hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--pad-x);
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 0;
+}
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+h1 {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: clamp(40px, 6.4vw, 80px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0;
+  text-transform: lowercase;
+  background: linear-gradient(180deg, #ffffff 0%, #b8b8b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rise 0.9s var(--ease) 0.08s both;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+}
+h1 .line { display: block; white-space: nowrap; }
+
+.sub {
+  font-size: clamp(15px, 1.4vw, 19px);
+  font-weight: 400;
+  color: var(--fg-dim);
+  margin: 0;
+  max-width: 520px;
+  letter-spacing: -0.005em;
+  animation: rise 0.9s var(--ease) 0.16s both;
+}
+
+/* Footer */
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px var(--pad-x);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg-mute);
+  flex-wrap: wrap;
+  gap: 12px;
+  border-top: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+}
+.foot a {
+  color: var(--fg-dim);
+  font-size: 16px;
+  font-weight: 600;
+  transition: color 0.25s var(--ease);
+}
+.foot a:hover { color: var(--fg); }
+.muted { color: var(--fg-mute); }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (max-height: 640px) {
+  h1 { font-size: clamp(32px, 6vw, 56px); }
+  .sub { font-size: 14px; }
+}
+
+/* MOBILE — hide the engine reveal entirely, fall back to v1's clean static layout */
+@media (max-width: 640px) {
+  :root {
+    --pad-x: 18px;
+  }
+  .engine-wrap,
+  .bg-cursor,
+  .bg-grain {
+    display: none;
+  }
+  .bg-base {
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 0%, rgba(255, 255, 255, 0.10), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 100% 100%, rgba(255, 255, 255, 0.05), transparent 55%),
+      linear-gradient(180deg, #0a0a0a 0%, #030303 100%);
+  }
+  .nav {
+    padding: 16px var(--pad-x);
+  }
+  .brand {
+    font-size: 18px;
+  }
+  .nav-cta {
+    font-size: 13px;
+    padding: 7px 13px;
+  }
+  h1 {
+    font-size: clamp(22px, 7vw, 56px);
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+  .sub {
+    font-size: 15px;
+    padding: 0 8px;
+  }
+  .hero-text {
+    gap: 16px;
+  }
+  .foot {
+    padding: 18px var(--pad-x);
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .foot a {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--fg);
+    flex: 1 1 100%;
+  }
+  .foot .muted {
+    font-size: 12px;
+    flex: 1 1 100%;
+  }
+}
+
+/* Very small phones (≤360px) — iPhone SE, etc. */
+@media (max-width: 360px) {
+  h1 { font-size: 22px; }
+  .brand { font-size: 17px; }
+  .nav-cta { padding: 6px 11px; font-size: 12px; }
+  .foot a { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1, .sub { animation: none; }
+}

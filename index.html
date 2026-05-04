@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
+    <title>nuum robotics — continuum robots for visual inspection</title>
+    <meta name="description" content="continuum robots for visual inspection — non-destructive testing for turbine engines" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23000'/%3E%3Ctext x='16' y='22' text-anchor='middle' dominant-baseline='alphabetic' font-family='sans-serif' font-size='22' font-weight='800' fill='%23fff'%3En%3C/text%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div class="bg-base" aria-hidden="true"></div>
+
+    <div class="engine-wrap" aria-hidden="true">
+      <!-- Static intake cowl (does not rotate) -->
+      <svg class="engine-cowl" viewBox="-400 -400 800 800" preserveAspectRatio="xMidYMid slice">
+        <circle r="380" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.6" />
+        <circle r="372" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.8" />
+        <circle r="345" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1" />
+        <circle r="338" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="0.6" />
+        <circle r="232" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.1" />
+        <circle r="226" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.6" />
+        <g id="acousticLiner" stroke="rgba(255,255,255,0.18)" stroke-width="0.5" fill="none"></g>
+      </svg>
+
+      <!-- Rotating fan + spinner (this group spins) -->
+      <svg class="engine" viewBox="-400 -400 800 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="hub" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.55" />
+            <stop offset="0.7" stop-color="#ffffff" stop-opacity="0.15" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.02" />
+          </radialGradient>
+        </defs>
+
+        <!-- 36 wide-chord fan blades, CFM56 style -->
+        <g id="fanBlades" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.72)" stroke-width="1" stroke-linejoin="round"></g>
+
+        <!-- Fan disk inner ring -->
+        <circle r="58" fill="rgba(0,0,0,0.85)" stroke="rgba(255,255,255,0.55)" stroke-width="1.1" />
+        <circle r="52" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="0.5" />
+
+        <!-- Spinner / nose cone with CFM56 signature white spiral -->
+        <circle r="44" fill="url(#hub)" stroke="rgba(255,255,255,0.7)" stroke-width="1.1" />
+        <path id="spinnerSpiral" d="" stroke="rgba(255,255,255,0.95)" stroke-width="2.2" fill="none" stroke-linecap="round" />
+        <circle r="3" fill="rgba(255,255,255,0.95)" />
+      </svg>
+    </div>
+
+    <div class="bg-cursor" aria-hidden="true"></div>
+    <div class="bg-grain" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="brand" href="/" aria-label="nuum robotics home">nuum robotics</a>
+      <a class="nav-cta" href="mailto:hello@nuumrobotics.com">contact <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main class="hero">
+      <div class="hero-text">
+        <h1>
+          <span class="line">continuum robots</span>
+          <span class="line">for visual inspection</span>
+        </h1>
+        <p class="sub">non-destructive testing for turbine engines</p>
+      </div>
+    </main>
+
+    <footer class="foot">
+      <a href="mailto:hello@nuumrobotics.com">hello@nuumrobotics.com</a>
+      <span class="muted">© <span id="year"></span> nuum robotics</span>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
