@@ -87,10 +87,11 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const root = document.documentElement;
 
-  let tx = window.innerWidth / 2;
-  let ty = window.innerHeight / 2;
-  let cx = tx;
-  let cy = ty;
+  const OFF = -9999;
+  let tx = OFF;
+  let ty = OFF;
+  let cx = OFF;
+  let cy = OFF;
   let raf = 0;
 
   const tick = () => {
@@ -111,6 +112,10 @@
     ty = y;
     if (!activated) {
       activated = true;
+      cx = x;
+      cy = y;
+      root.style.setProperty("--mx", x + "px");
+      root.style.setProperty("--my", y + "px");
       document.body.classList.add("cursor-active");
     }
     if (!raf) raf = requestAnimationFrame(tick);
@@ -122,8 +127,8 @@
     if (t) onMove(t.clientX, t.clientY);
   }, { passive: true });
 
-  root.style.setProperty("--mx", tx + "px");
-  root.style.setProperty("--my", ty + "px");
+  root.style.setProperty("--mx", OFF + "px");
+  root.style.setProperty("--my", OFF + "px");
 
   if (!reduceMotion) {
     const engine = document.querySelector(".engine");
