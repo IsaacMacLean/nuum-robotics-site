@@ -105,9 +105,14 @@
     }
   };
 
+  let activated = false;
   const onMove = (x, y) => {
     tx = x;
     ty = y;
+    if (!activated) {
+      activated = true;
+      document.body.classList.add("cursor-active");
+    }
     if (!raf) raf = requestAnimationFrame(tick);
   };
 
