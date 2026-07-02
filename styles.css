@@ -323,7 +323,7 @@ h1 .line { display: block; white-space: nowrap; }
   .foot a {
     color: #ededed;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 400;
     text-shadow: 0 2px 16px rgba(0, 0, 0, 0.8);
   }
   .foot .muted {
